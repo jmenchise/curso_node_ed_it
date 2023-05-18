@@ -27,6 +27,7 @@ console.log(suma10(1));
 /**
  * hoy por hoy ya no se usa esta forma de crear funciones a partir de otras. Para 
  * obtener el mismo resultado se utiliza el "bind".
+ * primero defino la función completa, o sea definiendole todos los parámetros que necesito;
  */
 
 let suma2 = (x, y) => {
@@ -35,7 +36,6 @@ let suma2 = (x, y) => {
 
 
 /**
- * primero defino la función completa, o sea definiendole todos los parámetros que necesito
  * y luego uso el bind
  */
 
