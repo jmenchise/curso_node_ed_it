@@ -10,7 +10,7 @@ let createUserFile = (iteration) => {
     let user = (0, genUsuario_1.default)();
     console.log('user:', user);
     let fileName = `./var/arch/${user.id}.json`;
-    fs_1.default.writeFile(fileName, JSON.stringify(user), 'utf-8', err => {
+    fs_1.default.writeFile(fileName, JSON.stringify(user, null, '\t'), 'utf-8', err => {
         console.log(err ? err : '');
         iteration < 10 && createUserFile(++iteration);
     });
