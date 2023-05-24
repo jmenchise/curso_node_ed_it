@@ -1,24 +1,39 @@
 
-let primeNumbersArr:number[] = [2,3]
+let primeNumbersArr: number[] = [2, 3]
 
-const findPrimeNumbers = (arr:number[]) => {
 
-   for (let number of arr) { //TODO: cambiar este for of por un for.
-      console.log(arr) // esto es un cambio que se hizo con el celular.
-      if (arr.length > 9) {
-         console.log(arr);
+const checkIfPrime = (number: number, arr: number[]) => {
+   if (arr.includes(number)) {
+      console.log(`el númnero ${number} es primo. ya está en el array`);
+      return false
+   }
+
+   for (let primeNumber of arr) {
+      if (number % primeNumber === 0) {
+         console.log(`el número ${number} no es primo`)
+         return false
+      }
+   }
+   return true
+}
+
+
+
+const findPrimeNumbers = (arr: number[], count: number) => {
+   for (let i = 2; ; i++) {
+      if (arr.length >= count) {
+         console.log('primeNumbersArr:', primeNumbersArr)
          return
       }
-      if (number % arr[number] === 0) {
-         return
+
+      if (checkIfPrime(i, arr)) {
+         console.log(`el número ${i} es primo. Se agrega al array.`)
+         arr.push(i)
       }
-      arr.push(number)
    }
 }
 
-console.log(primeNumbersArr);
+export default (count: number) => { findPrimeNumbers(primeNumbersArr, count) }
 
 
-
-export default () => findPrimeNumbers(primeNumbersArr);
 
