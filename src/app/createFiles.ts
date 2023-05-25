@@ -4,7 +4,6 @@ import fs from 'fs';
 
 
 let createUserFile = (iteration:number) => {
-
    if (iteration >10) {
       return
    }
