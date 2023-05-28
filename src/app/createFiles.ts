@@ -3,7 +3,7 @@ import genUsuario from '../lib/genUsuario'
 import fs from 'fs';
 
 
-let createUserFile = (iteration:number) => {
+export let createUserFile = (iteration:number) => {
 
    if (iteration >10) {
       return
@@ -22,4 +22,3 @@ let createUserFile = (iteration:number) => {
 }
 
 
-export default () => createUserFile(1)

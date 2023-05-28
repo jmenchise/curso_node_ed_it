@@ -1,9 +1,7 @@
-import createFiles from "./app/createFiles"
-import numerosPrimos from "./app/numerosPrimos"
+import { recursiveFindPrimeNumbers } from "./app/numerosPrimos";
+import { promisesExample1 } from "./app/promisesExamples";
 
 
 
-// createFiles();
-numerosPrimos(25);
-
-
+// recursiveFindPrimeNumbers();
+promisesExample1();

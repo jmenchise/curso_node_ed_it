@@ -1,2 +1,5 @@
 #Dependences
 /node_modules/
+
+#testFiles
+/var/arch/
