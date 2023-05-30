@@ -44,7 +44,7 @@ export const recursiveFindPrimeNumbers = () => {
       if (checkIfPrime(number, primeNumbersArr)) {
          primeNumbersArr.push(number);
          savePrimeNumber(number, (err: any) => {
-            console.error(err) //TODO: carga los numeros en la DB pero la consola tira un error de conexión.
+            console.error(err) 
             recursive(number + 1);
             return
          })
