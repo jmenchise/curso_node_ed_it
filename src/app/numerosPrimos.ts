@@ -37,10 +37,11 @@ export const checkIfPrime = (number: number, arr: number[]) => {
 
 export const recursiveFindPrimeNumbers = () => {
    (function recursive(number) {
-      if (primeNumbersArr.length >= 10) {
-         console.log('primeNumbersArr:', primeNumbersArr)
-         return
-      }
+      // Corte
+      // if (primeNumbersArr.length >= 10) {
+      //    console.log('primeNumbersArr:', primeNumbersArr)
+      //    return
+      // }
       if (checkIfPrime(number, primeNumbersArr)) {
          primeNumbersArr.push(number);
          savePrimeNumber(number, (err: any) => {
