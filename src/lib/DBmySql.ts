@@ -27,7 +27,7 @@ export const getPrimeNumbers = (onFinish: any) => {
                return
             }
          })
-         onFinish(results) //TODO: Hacer que retorne directamente el array, en lugar de tener que pasarle un cb para manejarlo.
+         onFinish(results) 
       })
    })
 
