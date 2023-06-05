@@ -1,14 +1,19 @@
 import { recursiveFindPrimeNumbers } from "./app/numerosPrimos";
-import { promisesExample1 } from "./app/promisesExamples";
 import server from "./server";
 import httpClient from "./http/httpClient";
 import { getPrimeNumbers } from "./lib/DBmySql";
+import 'dotenv/config'
+import createUserFile from "./app/createFiles";
+import getFiles from "./app/getFiles";
 
-console.log(process.argv);
 
 switch (process.argv[2]) {
    case 'numeros-primos':
       recursiveFindPrimeNumbers();
+      break;
+
+   case 'create-files':
+      createUserFile()
       break;
 
    case 'server':
@@ -23,6 +28,11 @@ switch (process.argv[2]) {
       httpClient(r => console.log(r));
       break;
 
+   case 'get-files':
+      getFiles();
+      break;
+
    default:
+      console.log('Por favor debe cargar un parámetro.');
       break;
 }

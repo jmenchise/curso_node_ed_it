@@ -1,18 +1,53 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-let primeNumbersArr = [2, 3];
-const findPrimeNumbers = (arr) => {
-    for (let number of arr) { //TODO: cambiar este for of por un for.
-        console.log(arr); // esto es un cambio que se hizo con el celular.
-        if (arr.length > 9) {
-            console.log(arr);
-            return;
-        }
-        if (number % arr[number] === 0) {
-            return;
-        }
-        arr.push(number);
+exports.recursiveFindPrimeNumbers = exports.checkIfPrime = void 0;
+const DBmySql_1 = require("../lib/DBmySql");
+let primeNumbersArr = [2];
+const checkIfPrime = (number, arr) => {
+    if (arr.includes(number)) {
+        console.log(`el númnero ${number} es primo. ya está en el array`);
+        return false;
     }
+    for (let primeNumber of arr) {
+        if (number % primeNumber === 0) {
+            console.log(`el número ${number} no es primo`);
+            return false;
+        }
+    }
+    console.log(`el número ${number} es primo. Se agrega al array.`);
+    return true;
 };
-console.log(primeNumbersArr);
-exports.default = () => findPrimeNumbers(primeNumbersArr);
+exports.checkIfPrime = checkIfPrime;
+// export const findPrimeNumbers = (arr: number[], count: number) => {
+//    for (let i = 3; ; i++) {
+//       if (arr.length >= count) {
+//          console.log('primeNumbersArr:', primeNumbersArr)
+//          return
+//       }
+//       if (checkIfPrime(i, arr)) {
+//          console.log(`el número ${i} es primo. Se agrega al array.`);
+//          arr.push(i);
+//       }
+//    }
+// }
+const recursiveFindPrimeNumbers = () => {
+    (function recursive(number) {
+        // Corte
+        if (primeNumbersArr.length >= 100) {
+            console.log('primeNumbersArr:', primeNumbersArr);
+            return;
+        }
+        if ((0, exports.checkIfPrime)(number, primeNumbersArr)) {
+            primeNumbersArr.push(number);
+            (0, DBmySql_1.savePrimeNumber)(number, (err) => {
+                console.error(err);
+                recursive(number + 1);
+                return;
+            });
+        }
+        else {
+            recursive(number + 1);
+        }
+    })(3);
+};
+exports.recursiveFindPrimeNumbers = recursiveFindPrimeNumbers;
