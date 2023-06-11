@@ -5,6 +5,7 @@ import { getPrimeNumbers } from "./lib/DBmySql";
 import 'dotenv/config'
 import createUserFile from "./app/createFiles";
 import uploadFiles from "./app/uploadFiles";
+import { pruebaMongo } from "./app/pruebaMongo";
 
 
 switch (process.argv[2]) {
@@ -30,6 +31,10 @@ switch (process.argv[2]) {
 
    case 'upload-files':
       uploadFiles();
+      break;
+
+   case 'mongo-test':
+      pruebaMongo();
       break;
 
    default:
