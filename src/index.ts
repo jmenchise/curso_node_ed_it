@@ -4,7 +4,7 @@ import httpClient from "./http/httpClient";
 import { getPrimeNumbers } from "./lib/DBmySql";
 import 'dotenv/config'
 import createUserFile from "./app/createFiles";
-import getFiles from "./app/getFiles";
+import uploadFiles from "./app/uploadFiles";
 
 
 switch (process.argv[2]) {
@@ -28,8 +28,8 @@ switch (process.argv[2]) {
       httpClient(r => console.log(r));
       break;
 
-   case 'get-files':
-      getFiles();
+   case 'upload-files':
+      uploadFiles();
       break;
 
    default:

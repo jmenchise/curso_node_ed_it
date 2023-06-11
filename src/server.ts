@@ -18,6 +18,32 @@ export default () => {
 
    app.get('/numeros-primos', (req, res) => getPrimeNumbers(r =>res.send(r)));
 
+   app.get('/client', (req, res) => {
+      console.log(req.query);
+      res.send([]);
+   })
+   
+   app.get('/client/:id', (req, res) => {
+      console.log('id:', req.params.id);
+      res.send({});
+   })
+   
+   app.post('/client', (req, res) => {
+      console.log(req.body);
+      res.send({});
+   })
+
+   app.put('/client/:id', (req, res) => {
+      console.log(req.params.id);
+      res.send({});
+   })
+   
+   app.delete('/client/:id', (req, res) => {
+      console.log(req.params.id);
+      res.send({});
+      // TODO: Armar la función DeleteClient para que borre un registro de la DB con el ID enviado.
+
+   })
 
    app.delete('/primer-delete', (req, res) => {
       let response = {
