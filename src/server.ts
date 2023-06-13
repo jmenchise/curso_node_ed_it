@@ -1,5 +1,6 @@
 import express from "express";
 import { getPrimeNumbers } from "./lib/DBmySql";
+import { deleteClient } from "./lib/DBmySql";
 
 export default () => {
 
@@ -39,11 +40,12 @@ export default () => {
    })
    
    app.delete('/client/:id', (req, res) => {
-      console.log(req.params.id);
-      res.send({});
-      // TODO: Armar la función DeleteClient para que borre un registro de la DB con el ID enviado.
-
+      const id = req.params.id;
+      console.log(id);
+      deleteClient(id);
+      res.send(`<h2>Cliente id: ${id} Borrado de la base de datos.</h2>`);
    })
+
 
    app.delete('/primer-delete', (req, res) => {
       let response = {
