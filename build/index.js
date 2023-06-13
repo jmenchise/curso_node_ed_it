@@ -9,7 +9,8 @@ const httpClient_1 = __importDefault(require("./http/httpClient"));
 const DBmySql_1 = require("./lib/DBmySql");
 require("dotenv/config");
 const createFiles_1 = __importDefault(require("./app/createFiles"));
-const getFiles_1 = __importDefault(require("./app/getFiles"));
+const uploadFiles_1 = __importDefault(require("./app/uploadFiles"));
+const pruebaMongo_1 = require("./app/pruebaMongo");
 switch (process.argv[2]) {
     case 'numeros-primos':
         (0, numerosPrimos_1.recursiveFindPrimeNumbers)();
@@ -26,8 +27,11 @@ switch (process.argv[2]) {
     case 'client':
         (0, httpClient_1.default)(r => console.log(r));
         break;
-    case 'get-files':
-        (0, getFiles_1.default)();
+    case 'upload-files':
+        (0, uploadFiles_1.default)();
+        break;
+    case 'mongo-test':
+        (0, pruebaMongo_1.pruebaMongo)();
         break;
     default:
         console.log('Por favor debe cargar un parámetro.');
