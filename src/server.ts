@@ -1,9 +1,15 @@
 import express from "express";
 import { getPrimeNumbers } from "./lib/DBmySql";
+import genUsuario from './lib/genUsuario';
+import { insertOne, queryMongo } from './lib/DBMongoDB';
+
+
 
 export default () => {
 
    const app = express();
+
+   app.use(express.json());
 
    app.get('/primer-get', (req, res) => {
       let response = {
@@ -16,33 +22,76 @@ export default () => {
       res.json(response);
    })
 
-   app.get('/numeros-primos', (req, res) => getPrimeNumbers(r =>res.send(r)));
+   app.get('/create-client', (req, res) => res.json(genUsuario()))
 
+   app.get('/numeros-primos', (req, res) => getPrimeNumbers(r => res.send(r)));
+
+
+   // Forma .then()
    app.get('/client', (req, res) => {
-      console.log(req.query);
-      res.send([]);
+      const query = req.query;
+      console.log(query);
+
+      queryMongo('clients', query)
+         .then(queryResult => res.send(queryResult))
+         .catch(error => res.status(500).send(error));
    })
-   
+
+   //Forma async await
+   // app.get('/client', async (req, res) => {
+   //    const query = req.query;
+   //    console.log(query);
+
+   //    try {
+   //       res.send(await queryMongo('clients', query));
+   //    } catch (error) {
+   //       res.status(500).send(error)
+   //    }
+   // })
+
+
    app.get('/client/:id', (req, res) => {
       console.log('id:', req.params.id);
       res.send({});
    })
-   
+
+
+
+   // Forma .then()
    app.post('/client', (req, res) => {
-      console.log(req.body);
-      res.send({});
+      const client = req.body;
+      console.log(client);
+
+      insertOne('clients', client)
+         .then(r => res.status(201).send(r))
+         .catch(error => {
+            console.log(error.message);
+            res.status(500).send(error.message);
+         })
    })
+
+   //Forma async await
+   // app.post('/client', async (req, res) => {
+   //    const client = req.body;
+   //    console.log(client);
+
+   //    try {
+   //       res.status(201).send(await insertOne('clients', client))
+   //    } catch (error) {
+   //       res.status(500).send(error);
+   //    }
+   // })
+
+
 
    app.put('/client/:id', (req, res) => {
       console.log(req.params.id);
       res.send({});
    })
-   
+
    app.delete('/client/:id', (req, res) => {
       console.log(req.params.id);
       res.send({});
-      // TODO: Armar la función DeleteClient para que borre un registro de la DB con el ID enviado.
-
    })
 
    app.delete('/primer-delete', (req, res) => {
