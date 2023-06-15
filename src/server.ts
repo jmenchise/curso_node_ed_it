@@ -2,6 +2,7 @@ import express from "express";
 import { getPrimeNumbers } from "./lib/DBmySql";
 import genUsuario from './lib/genUsuario';
 import { insertOne, queryMongo } from './lib/DBMongoDB';
+import dateAndTime from './app/middlewares/hora';
 
 
 
@@ -10,6 +11,8 @@ export default () => {
    const app = express();
 
    app.use(express.json());
+   app.use(dateAndTime());
+
 
    app.get('/primer-get', (req, res) => {
       let response = {
@@ -21,6 +24,7 @@ export default () => {
       // res.send(response);
       res.json(response);
    })
+
 
    app.get('/create-client', (req, res) => res.json(genUsuario()))
 

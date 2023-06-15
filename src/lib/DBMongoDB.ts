@@ -5,7 +5,7 @@ export const insertOne = async (collectionName: string, document: object) => {
 
    const client = await MongoClient.connect(url);
    console.log('Conexión con Mongodb exitosa!');
-   const DB = client.db('nodebraker_10');
+   const DB = client.db(process.env.DB_MONGODB_NAME);
    const collection = DB.collection(collectionName);
    
    //guardo lo que retorna el insertOne en una variable para 
@@ -23,7 +23,7 @@ export const queryMongo = async (collectionName: string, query: object) => {
 
    const client = await MongoClient.connect(url);
    console.log('Conexión con Mongodb exitosa!');
-   const DB = client.db('nodebraker_10');
+   const DB = client.db(process.env.DB_MONGODB_NAME);
    const collection = DB.collection(collectionName);
 
    const result = await collection.find(query).toArray();
