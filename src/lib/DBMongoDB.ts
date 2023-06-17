@@ -1,6 +1,6 @@
 import { MongoClient } from 'mongodb';
 
-export const insertOne = async (collectionName: string, document: object) => {
+export const insertOneMongo = async (collectionName: string, document: object) => {
    const url = 'mongodb://0.0.0.0:27017';
 
    const client = await MongoClient.connect(url);

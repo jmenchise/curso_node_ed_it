@@ -1,4 +1,5 @@
-import mysql from 'mysql2'
+import mysql from 'mysql2';
+import mysql2Prom from 'mysql2/promise';
 
 
 export const getPrimeNumbers = (onFinish: any) => {
@@ -68,3 +69,15 @@ export const savePrimeNumber = (number: number, onFinish: any) => {
 
 
 
+export const deleteClient = async (id: string) => {
+   let tmplSQL = `DELETE FROM clients WHERE id = '${id}'`;
+
+   const connection = await mysql2Prom.createConnection({
+      host: 'localhost',
+      user: 'root',
+      database: 'cursonode'
+   });
+   await connection.query(tmplSQL);
+
+   await connection.end();
+}
