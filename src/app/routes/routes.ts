@@ -1,6 +1,6 @@
 import express from 'express';
 import { insertOneMongo, queryMongo, findOneMongo, updateOneMongo, deleteOneMongo } from '../../lib/DBMongoDB';
-
+import genUsuario from '../../lib/genUsuario';
 
 export default express.Router()
    .get('/', (req, res) => {
@@ -12,14 +12,25 @@ export default express.Router()
       const query = req.query;
       console.log('query:', query);
       queryMongo('clients', query)
-         .then(queryResult => res.send(queryResult[0]))
+         .then(queryResult => {
+            queryResult.length > 0 ? res.send(queryResult[0])
+            : res.status(404).send(
+               `<h2>Cliente no encontrado</h2>`
+            );
+         })
          .catch(error => res.status(500).send(error));
    })
+   .get('/create', (req, res) => res.json(genUsuario()))
    .get('/:id', (req, res) => {
       const { id } = req.params;
       console.log('id:', id);
       findOneMongo('clients', id)
-         .then(queryResult => res.send(queryResult))
+         .then(queryResult => {
+            queryResult ? res.send(queryResult) 
+            : res.status(404).send(
+               `<h2>El id especificado no existe</h2>`
+            );
+         })
          .catch(error => res.status(500).send(error));
    })
    .post('/', (req, res) => {

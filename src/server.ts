@@ -1,6 +1,5 @@
 import express from "express";
 import { getPrimeNumbers } from "./lib/DBmySql";
-import genUsuario from './lib/genUsuario';
 import dateAndTime from './app/middlewares/hora';
 import { deleteClient } from "./lib/DBmySql";
 import routerClient from "./app/routes/routes";
@@ -24,8 +23,6 @@ export default () => {
       // res.send(response);
       res.json(response);
    })
-
-   app.get('/create-client', (req, res) => res.json(genUsuario()))
 
    app.get('/numeros-primos', (req, res) => getPrimeNumbers(r => res.send(r)));
 

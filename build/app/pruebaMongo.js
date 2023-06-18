@@ -8,7 +8,7 @@ const DBMongoDB_1 = require("../lib/DBMongoDB");
 const genUsuario_1 = __importDefault(require("../lib/genUsuario"));
 let client = (0, genUsuario_1.default)();
 const pruebaMongo = () => {
-    (0, DBMongoDB_1.insertOne)('clients', client)
+    (0, DBMongoDB_1.insertOneMongo)('clients', client)
         .then(r => console.log(r));
 };
 exports.pruebaMongo = pruebaMongo;

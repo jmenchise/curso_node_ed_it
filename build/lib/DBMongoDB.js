@@ -9,13 +9,13 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.queryMongo = exports.insertOne = void 0;
+exports.deleteOneMongo = exports.updateOneMongo = exports.findOneMongo = exports.queryMongo = exports.insertOneMongo = void 0;
 const mongodb_1 = require("mongodb");
-const insertOne = (collectionName, document) => __awaiter(void 0, void 0, void 0, function* () {
+const insertOneMongo = (collectionName, document) => __awaiter(void 0, void 0, void 0, function* () {
     const url = 'mongodb://0.0.0.0:27017';
     const client = yield mongodb_1.MongoClient.connect(url);
     console.log('Conexión con Mongodb exitosa!');
-    const DB = client.db('nodebraker_10');
+    const DB = client.db(process.env.DB_MONGODB_NAME);
     const collection = DB.collection(collectionName);
     //guardo lo que retorna el insertOne en una variable para 
     //visualizar el resultado en la consola (si se pudo insertar
@@ -24,15 +24,50 @@ const insertOne = (collectionName, document) => __awaiter(void 0, void 0, void 0
     yield client.close();
     return result;
 });
-exports.insertOne = insertOne;
+exports.insertOneMongo = insertOneMongo;
 const queryMongo = (collectionName, query) => __awaiter(void 0, void 0, void 0, function* () {
     const url = 'mongodb://0.0.0.0:27017';
     const client = yield mongodb_1.MongoClient.connect(url);
     console.log('Conexión con Mongodb exitosa!');
-    const DB = client.db('nodebraker_10');
+    const DB = client.db(process.env.DB_MONGODB_NAME);
     const collection = DB.collection(collectionName);
     const result = yield collection.find(query).toArray();
     yield client.close();
     return result;
 });
 exports.queryMongo = queryMongo;
+const findOneMongo = (collectionName, id) => __awaiter(void 0, void 0, void 0, function* () {
+    const url = 'mongodb://0.0.0.0:27017';
+    const client = yield mongodb_1.MongoClient.connect(url);
+    console.log('Conexión con Mongodb exitosa!');
+    const DB = client.db(process.env.DB_MONGODB_NAME);
+    const collection = DB.collection(collectionName);
+    const result = yield collection.findOne({ id: id });
+    yield client.close();
+    return result;
+});
+exports.findOneMongo = findOneMongo;
+const updateOneMongo = (collectionName, id, obj) => __awaiter(void 0, void 0, void 0, function* () {
+    const url = 'mongodb://0.0.0.0:27017';
+    const client = yield mongodb_1.MongoClient.connect(url);
+    console.log('Conexión con Mongodb exitosa!');
+    const DB = client.db(process.env.DB_MONGODB_NAME);
+    const collection = DB.collection(collectionName);
+    const result = yield collection.findOneAndUpdate({ id: id }, { $set: obj }, {
+        returnDocument: 'after'
+    });
+    yield client.close();
+    return result.value;
+});
+exports.updateOneMongo = updateOneMongo;
+const deleteOneMongo = (collectionName, id) => __awaiter(void 0, void 0, void 0, function* () {
+    const url = 'mongodb://0.0.0.0:27017';
+    const client = yield mongodb_1.MongoClient.connect(url);
+    console.log('Conexión con Mongodb exitosa!');
+    const DB = client.db(process.env.DB_MONGODB_NAME);
+    const collection = DB.collection(collectionName);
+    const result = yield collection.findOneAndDelete({ id: id });
+    yield client.close();
+    return result.value;
+});
+exports.deleteOneMongo = deleteOneMongo;
