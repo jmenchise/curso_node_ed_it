@@ -1,9 +1,10 @@
 import express from "express";
 import { getPrimeNumbers } from "./lib/DBmySql";
 import dateAndTime from './app/middlewares/hora';
+import authenticacionRouter from './app/middlewares/autenticacion';
 import { deleteClient } from "./lib/DBmySql";
-import routerClient from "./app/routes/routes";
-
+import routerClient from "./app/routes/client";
+import routerLogin from './app/routes/login';
 
 export default () => {
 
@@ -11,6 +12,9 @@ export default () => {
 
    app.use(express.json());
    app.use(dateAndTime());
+   
+   app.use('/login', routerLogin);
+   app.use(authenticacionRouter());
    app.use('/client', routerClient);
 
    app.get('/primer-get', (req, res) => {
