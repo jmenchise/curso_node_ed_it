@@ -5,13 +5,14 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const DBmySql_1 = require("./lib/DBmySql");
-const hora_1 = __importDefault(require("./app/middlewares/hora"));
-const routes_1 = __importDefault(require("./app/routes/routes"));
+const client_1 = __importDefault(require("./app/routes/client"));
+const login_1 = __importDefault(require("./app/routes/login"));
 exports.default = () => {
     const app = (0, express_1.default)();
     app.use(express_1.default.json());
-    app.use((0, hora_1.default)());
-    app.use('/client', routes_1.default);
+    app.use('/login', login_1.default);
+    // app.use(authenticacionRouter());
+    app.use('/client', client_1.default);
     app.get('/primer-get', (req, res) => {
         let response = {
             nombre: 'hola',

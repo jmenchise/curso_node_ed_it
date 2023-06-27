@@ -11,6 +11,7 @@ require("dotenv/config");
 const createFiles_1 = __importDefault(require("./app/createFiles"));
 const uploadFiles_1 = __importDefault(require("./app/uploadFiles"));
 const pruebaMongo_1 = require("./app/pruebaMongo");
+const pruebaPasswords_1 = __importDefault(require("./app/pruebaPasswords"));
 switch (process.argv[2]) {
     case 'numeros-primos':
         (0, numerosPrimos_1.recursiveFindPrimeNumbers)();
@@ -32,6 +33,9 @@ switch (process.argv[2]) {
         break;
     case 'mongo-test':
         (0, pruebaMongo_1.pruebaMongo)();
+        break;
+    case 'passwords':
+        (0, pruebaPasswords_1.default)();
         break;
     default:
         console.log('Por favor debe cargar un parámetro.');

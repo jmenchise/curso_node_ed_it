@@ -1,5 +1,6 @@
-import { saveUser, validateUser } from '../lib/DBmySql';
-
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const DBmySql_1 = require("../lib/DBmySql");
 // export default () => {
 //    console.log(`voy a encriptar 'Hola' en sha256`);
 //    const salt = [uuid(), uuid()].join('__');
@@ -8,8 +9,5 @@ import { saveUser, validateUser } from '../lib/DBmySql';
 //    const encryptedPass = sha256(passToEncrypt);
 //    console.log('encryptedPass:', encryptedPass);
 // }
-
-
-
 // export default () => saveUser({userName: 'joan', cleanPassword: 'hola1234'});
-export default () => validateUser({userName: 'joan', cleanPassword: 'hola12344'});
+exports.default = () => (0, DBmySql_1.validateUser)({ userName: 'joan', cleanPassword: 'hola12344' });
