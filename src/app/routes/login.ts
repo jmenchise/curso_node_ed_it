@@ -1,5 +1,6 @@
 import express from 'express';
 import {v4 as uuid} from 'uuid';
+import { saveUser, validateUser } from '../../lib/DBmySql';
 
 
 export default express.Router()
@@ -7,16 +8,10 @@ export default express.Router()
       
    })
    .post('/', (req, res) => {
-      const body = req.body;
-      console.log('body:', body);
-
-      /* TODO:con el usuario hacer una query en mysql y luego con la password 
-      encriptarla usando el sha256 y el salt (que están dentro de la base de datos)
-      y compararla con el password encriptada. si coinciden devolver un token
-      */
-      
-      
-      res.status(200).send({token: uuid()});
+      const user = req.body;
+      console.log('user:', user);
+      validateUser(user);
+      // res.status(200).send({token: uuid()});
    })
    .put('/', (req, res) => {
       
