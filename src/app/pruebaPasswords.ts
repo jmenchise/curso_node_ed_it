@@ -1,4 +1,4 @@
-import { saveUser, validateUser } from '../lib/DBmySql';
+import { saveUser } from '../lib/DBmySql';
 
 // export default () => {
 //    console.log(`voy a encriptar 'Hola' en sha256`);
@@ -10,5 +10,9 @@ import { saveUser, validateUser } from '../lib/DBmySql';
 // }
 
 
-export default () => saveUser({userName: 'pepe', clearPassword: 'pepe1234'});
-// export default () => validateUser({userName: 'joan', clearPassword: 'hola12344'});
+const testUser = {
+   userName: 'pepe',
+   clearPassword: 'pepe1234'
+};
+
+export default () => saveUser(testUser);

@@ -9,5 +9,8 @@ const DBmySql_1 = require("../lib/DBmySql");
 //    const encryptedPass = sha256(passToEncrypt);
 //    console.log('encryptedPass:', encryptedPass);
 // }
-exports.default = () => (0, DBmySql_1.saveUser)({ userName: 'pepe', clearPassword: 'pepe1234' });
-// export default () => validateUser({userName: 'joan', clearPassword: 'hola12344'});
+const testUser = {
+    userName: 'pepe',
+    clearPassword: 'pepe1234'
+};
+exports.default = () => (0, DBmySql_1.saveUser)(testUser);

@@ -9,3 +9,13 @@ export interface Usuario {
    account: string,
    amount: number
 };
+export interface User {
+   id?: string,
+   userName: string,
+   clearPassword: string,
+   encryptedPassword?: string,
+   salt?: string,
+   token?: string,
+};
+
+

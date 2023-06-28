@@ -1,6 +1,7 @@
 import { v4 as uuid } from 'uuid';
 import sha256 from 'sha256';
 import createMySqlConnection from './DBmySqlConnection';
+import { User } from '../interfaces/Usuario';
 
 
 export const ERROR_TYPE = {
@@ -10,7 +11,7 @@ export const ERROR_TYPE = {
 }
 
 
-export const saveUser = async (user: any) => {
+export const saveUser = async (user: User) => {
    let tmplSQL = 'INSERT INTO users (id_user, user_name, encrypted_password, salt, token) VALUES (?, ?, ?, ?, ?)';
    let connection: any;
 
@@ -36,7 +37,7 @@ export const saveUser = async (user: any) => {
 };
 
 
-export const validateUser = async (user: any) => {
+export const validateUser = async (user: User) => {
    let tmplSQL = `SELECT * FROM users WHERE user_name = ? `;
    let connection: any;
 
@@ -60,7 +61,7 @@ export const validateUser = async (user: any) => {
    };
 };
 
-export const createToken = async (user: any, token: string) => {
+export const createToken = async (user: User, token: string) => {
    let tmplSQL = `UPDATE users SET token = ? WHERE user_name = ? `;
    let connection: any;
 
