@@ -1,7 +1,7 @@
 import { recursiveFindPrimeNumbers } from "./app/numerosPrimos";
 import server from "./server";
 import httpClient from "./http/httpClient";
-import { getPrimeNumbers } from "./lib/DBmySql";
+import { getPrimeNumbers } from "./lib/DBmySqlPrimeNumbers";
 import 'dotenv/config';
 import createUserFile from "./app/createFiles";
 import uploadFiles from "./app/uploadFiles";

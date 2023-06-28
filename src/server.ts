@@ -1,5 +1,5 @@
 import express from "express";
-import { getPrimeNumbers } from "./lib/DBmySql";
+import { getPrimeNumbers } from "./lib/DBmySqlPrimeNumbers";
 import authenticacionRouter from './app/middlewares/autenticacion';
 import routerClient from "./app/routes/client";
 import routerLogin from './app/routes/login';

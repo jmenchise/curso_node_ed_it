@@ -11,5 +11,5 @@ import { saveUser, validateUser } from '../lib/DBmySql';
 
 
 
-// export default () => saveUser({userName: 'joan', cleanPassword: 'hola1234'});
-export default () => validateUser({userName: 'joan', cleanPassword: 'hola12344'});
+export default () => saveUser({userName: 'pepe', clearPassword: 'pepe1234'});
+// export default () => validateUser({userName: 'joan', clearPassword: 'hola12344'});

@@ -1,4 +1,4 @@
-import { savePrimeNumber } from "../lib/DBmySql";
+import { savePrimeNumber } from "../lib/DBmySqlPrimeNumbers";
 
 let primeNumbersArr: number[] = [2]
 
