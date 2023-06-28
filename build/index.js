@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const numerosPrimos_1 = require("./app/numerosPrimos");
 const server_1 = __importDefault(require("./server"));
 const httpClient_1 = __importDefault(require("./http/httpClient"));
-const DBmySql_1 = require("./lib/DBmySql");
+const DBmySqlPrimeNumbers_1 = require("./lib/DBmySqlPrimeNumbers");
 require("dotenv/config");
 const createFiles_1 = __importDefault(require("./app/createFiles"));
 const uploadFiles_1 = __importDefault(require("./app/uploadFiles"));
@@ -23,7 +23,7 @@ switch (process.argv[2]) {
         (0, server_1.default)();
         break;
     case 'test':
-        (0, DBmySql_1.getPrimeNumbers)(r => console.log(r));
+        (0, DBmySqlPrimeNumbers_1.getPrimeNumbers)(r => console.log(r));
         break;
     case 'client':
         (0, httpClient_1.default)(r => console.log(r));

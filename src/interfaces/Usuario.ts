@@ -8,4 +8,4 @@ export interface Usuario {
    accountName: string,
    account: string,
    amount: number
-}
+};

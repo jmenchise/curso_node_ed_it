@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.recursiveFindPrimeNumbers = exports.checkIfPrime = void 0;
-const DBmySql_1 = require("../lib/DBmySql");
+const DBmySqlPrimeNumbers_1 = require("../lib/DBmySqlPrimeNumbers");
 let primeNumbersArr = [2];
 const checkIfPrime = (number, arr) => {
     if (arr.includes(number)) {
@@ -39,7 +39,7 @@ const recursiveFindPrimeNumbers = () => {
         }
         if ((0, exports.checkIfPrime)(number, primeNumbersArr)) {
             primeNumbersArr.push(number);
-            (0, DBmySql_1.savePrimeNumber)(number, (err) => {
+            (0, DBmySqlPrimeNumbers_1.savePrimeNumber)(number, (err) => {
                 console.error(err);
                 recursive(number + 1);
                 return;

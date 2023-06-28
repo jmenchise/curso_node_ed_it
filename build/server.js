@@ -4,7 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const DBmySql_1 = require("./lib/DBmySql");
+const DBmySqlPrimeNumbers_1 = require("./lib/DBmySqlPrimeNumbers");
 const client_1 = __importDefault(require("./app/routes/client"));
 const login_1 = __importDefault(require("./app/routes/login"));
 exports.default = () => {
@@ -23,7 +23,7 @@ exports.default = () => {
         // res.send(response);
         res.json(response);
     });
-    app.get('/numeros-primos', (req, res) => (0, DBmySql_1.getPrimeNumbers)(r => res.send(r)));
+    app.get('/numeros-primos', (req, res) => (0, DBmySqlPrimeNumbers_1.getPrimeNumbers)(r => res.send(r)));
     // Este delete es de mySql
     // app.delete('/client/:id', (req, res) => {
     //    const id = req.params.id;

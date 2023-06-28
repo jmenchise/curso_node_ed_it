@@ -1,12 +1,12 @@
 import { v4 as uuid } from 'uuid';
-
 import sha256 from 'sha256';
 import createMySqlConnection from './DBmySqlConnection';
 
 
 export const ERROR_TYPE = {
-   TYPE_NOT_FOUND : 'error al encontrar el usuario',
-   TYPE_NOT_VALIDATED: 'Usuario y/o contraseña incorrectos.'
+   TYPE_NOT_FOUND: 'error al encontrar el usuario',
+   TYPE_NOT_VALIDATED: 'Usuario y/o contraseña incorrectos.',
+   TYPE_CONNECT_ERR: 'error al conectar con la base de datos.'
 }
 
 
@@ -18,8 +18,9 @@ export const saveUser = async (user: any) => {
       connection = await createMySqlConnection();
       console.log('Conexión con MySql exitosa!');
    } catch (error) {
-      throw new Error('error al conectar con la base de datos.');
+      throw new Error(ERROR_TYPE.TYPE_CONNECT_ERR);
    };
+
    user.salt = [uuid(), uuid()].join('__');
    const passToEncrypt = [user.clearPassword, user.salt].join('');
    user.encryptedPassword = sha256(passToEncrypt);
@@ -43,9 +44,9 @@ export const validateUser = async (user: any) => {
       connection = await createMySqlConnection();
       console.log('Conexión con MySql exitosa!');
    } catch (error) {
-      throw new Error('error al conectar con la base de datos.');
+      throw new Error(ERROR_TYPE.TYPE_CONNECT_ERR);
    };
-   const responseArr: any = await connection.query(tmplSQL, user.userName);
+   const responseArr: object[] = await connection.query(tmplSQL, user.userName);
    const result: any = responseArr[0];
    console.log('result:', result);
    await connection.end();
@@ -59,12 +60,47 @@ export const validateUser = async (user: any) => {
    };
 };
 
-export const createToken = async () => {
+export const createToken = async (user: any, token: string) => {
+   let tmplSQL = `UPDATE users SET token = ? WHERE user_name = ? `;
+   let connection: any;
 
+   try {
+      connection = await createMySqlConnection();
+      console.log('Conexión con MySql exitosa!');
+   } catch (error) {
+      throw new Error(ERROR_TYPE.TYPE_CONNECT_ERR);
+   };
+
+   try {
+      await connection.query(tmplSQL, [token, user.userName]);
+      console.log('Token creado con éxito!');
+      await connection.end();
+   } catch (error: any) {
+      throw new Error(`error al crear el token.`);
+   };
 };
 
-export const validateToken = async () => {
+export const validateToken = async (token: string) => {
+   let tmplSQL = `SELECT * FROM users WHERE token = ? `;
+   let connection: any;
+   
+   try {
+      connection = await createMySqlConnection();
+      console.log('Conexión con MySql exitosa!');
+   } catch (error) {
+      throw new Error(ERROR_TYPE.TYPE_CONNECT_ERR);
+   };
+   const responseArr: object[] = await connection.query(tmplSQL, token);
+   const result: any = responseArr[0];
+   console.log('result:', result);
+   await connection.end();
+   if (result.length === 0) {
+      throw new Error(ERROR_TYPE.TYPE_NOT_FOUND);
+   };
 
+   const tokenFound = result[0];
+   console.log('usuario encontrado!');
+   return tokenFound;
 };
 
 
@@ -76,7 +112,7 @@ export const deleteClient = async (id: string) => {
       connection = await createMySqlConnection();
       console.log('Conexión con MySql exitosa!');
    } catch (error) {
-      throw new Error('error al conectar con la base de datos.')
+      throw new Error(ERROR_TYPE.TYPE_CONNECT_ERR)
    };
    await connection.query(tmplSQL);
    await connection.end();
