@@ -1,24 +1,22 @@
 import express from 'express';
 import { ERROR_TYPE, saveToken, validateToken, validateUser } from '../../lib/DBmySql';
-import { createJWT } from '../../lib/jwt/createToken';
-import { validateJWT } from '../../lib/jwt/validateToken';
+import { createJWT } from '../../lib/jwt/createJWT';
 
 
 
 export default express.Router()
    .get('/', (req, res) => {
-
+      res.send({response: 'Usuario autenticado correctamente.'});
    })
    .post('/', async (req, res) => {
       const user = req.body;
       console.log('user:', user);
       try {
-         await validateUser(user);
-         console.log('usuario autenticado correctamente.');
+         // await validateUser(user);
+         // console.log('usuario autenticado correctamente.');
          const token = createJWT();
-         console.log('token:', token);
-         await saveToken(user, token);
-         validateJWT(token);
+         // await saveToken(user, token);
+         // validateJWT(token);
          // await validateToken(token);
          res.status(200).send({ token });
       } catch (error: any) {

@@ -1,16 +1,23 @@
+import { decodeJWT } from "../../lib/jwt/decodeJWT";
+import { validateJWT } from "../../lib/jwt/validateJWT";
 
-export default () => (req, res, next) => {
+
+export default (req, res, next) => {
    console.log('Se chequea si viene un token para autorizar o no al usuario');
+   if (req.method === 'POST') {
+      next();
+   };
+
    const xToken = req.headers['x-token'];
    if (!xToken) {
       console.log('Token no existe');
       res.status(401).send({});
-   }
-   if (xToken === '1234ab') {
-      console.log('Token correcto');
+      return;
+   };
+   if (validateJWT(xToken)) {
+      decodeJWT(xToken);
       next();
-      return
-   }
-   console.log('Token incorrecto');
+      return;
+   };
    res.status(401).send({});
 }

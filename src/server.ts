@@ -1,8 +1,8 @@
 import express from "express";
 import { getPrimeNumbers } from "./lib/DBmySqlPrimeNumbers";
 import authenticacionRouter from './app/middlewares/autenticacion';
-import routerClient from "./app/routes/client";
-import routerLogin from './app/routes/login';
+import clientRouter from "./app/routes/client";
+import loginRouter from './app/routes/login';
 
 export default () => {
 
@@ -10,9 +10,9 @@ export default () => {
 
    app.use(express.json());
    
-   app.use('/login', routerLogin);
-   // app.use(authenticacionRouter());
-   app.use('/client', routerClient);
+   app.use('/login',authenticacionRouter);
+   app.use('/login', loginRouter);
+   app.use('/client', clientRouter);
 
    app.get('/primer-get', (req, res) => {
       let response = {

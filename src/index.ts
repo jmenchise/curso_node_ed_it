@@ -7,8 +7,9 @@ import createUserFile from "./app/createFiles";
 import uploadFiles from "./app/uploadFiles";
 import { pruebaMongo } from "./app/pruebaMongo";
 import pruebaPasswords from "./app/pruebaPasswords";
-import { createJWT } from "./lib/jwt/createToken";
-import { validateJWT } from "./lib/jwt/validateToken";
+import { createJWT } from "./lib/jwt/createJWT";
+import { validateJWT } from "./lib/jwt/validateJWT";
+import { decodeJWT } from "./lib/jwt/decodeJWT";
 
 
 switch (process.argv[2]) {
@@ -50,6 +51,10 @@ switch (process.argv[2]) {
 
    case 'validate-jwt':
       validateJWT(process.argv[3]);
+      break;
+
+   case 'read-jwt':
+      decodeJWT(process.argv[3]);
       break;
 
    default:
