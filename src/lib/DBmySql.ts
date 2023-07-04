@@ -61,7 +61,7 @@ export const validateUser = async (user: User) => {
    };
 };
 
-export const createToken = async (user: User, token: string) => {
+export const saveToken = async (user: User, token: string) => {
    let tmplSQL = `UPDATE users SET token = ? WHERE user_name = ? `;
    let connection: any;
 
@@ -74,7 +74,7 @@ export const createToken = async (user: User, token: string) => {
 
    try {
       await connection.query(tmplSQL, [token, user.userName]);
-      console.log('Token creado con éxito!');
+      console.log('Token guardado con éxito!');
       await connection.end();
    } catch (error: any) {
       throw new Error(`error al crear el token.`);

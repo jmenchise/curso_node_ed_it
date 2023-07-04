@@ -12,6 +12,7 @@ const createFiles_1 = __importDefault(require("./app/createFiles"));
 const uploadFiles_1 = __importDefault(require("./app/uploadFiles"));
 const pruebaMongo_1 = require("./app/pruebaMongo");
 const pruebaPasswords_1 = __importDefault(require("./app/pruebaPasswords"));
+const createToken_1 = require("./lib/jwt/createToken");
 switch (process.argv[2]) {
     case 'numeros-primos':
         (0, numerosPrimos_1.recursiveFindPrimeNumbers)();
@@ -36,6 +37,11 @@ switch (process.argv[2]) {
         break;
     case 'passwords':
         (0, pruebaPasswords_1.default)();
+        break;
+    case 'create-jwt':
+        (0, createToken_1.createJWT)();
+        break;
+    case 'validate-jwt':
         break;
     default:
         console.log('Por favor debe cargar un parámetro.');

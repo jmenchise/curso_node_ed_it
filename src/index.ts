@@ -7,6 +7,8 @@ import createUserFile from "./app/createFiles";
 import uploadFiles from "./app/uploadFiles";
 import { pruebaMongo } from "./app/pruebaMongo";
 import pruebaPasswords from "./app/pruebaPasswords";
+import { createJWT } from "./lib/jwt/createToken";
+import { validateJWT } from "./lib/jwt/validateToken";
 
 
 switch (process.argv[2]) {
@@ -40,7 +42,15 @@ switch (process.argv[2]) {
    
    case 'passwords':
       pruebaPasswords();
-      break
+      break;
+
+   case 'create-jwt':
+      createJWT();
+      break;
+
+   case 'validate-jwt':
+      validateJWT(process.argv[3]);
+      break;
 
    default:
       console.log('Por favor debe cargar un parámetro.');

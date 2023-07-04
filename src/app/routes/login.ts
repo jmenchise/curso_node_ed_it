@@ -1,6 +1,8 @@
 import express from 'express';
-import { v4 as uuid } from 'uuid';
-import { ERROR_TYPE, createToken, validateToken, validateUser } from '../../lib/DBmySql';
+import { ERROR_TYPE, saveToken, validateToken, validateUser } from '../../lib/DBmySql';
+import { createJWT } from '../../lib/jwt/createToken';
+import { validateJWT } from '../../lib/jwt/validateToken';
+
 
 
 export default express.Router()
@@ -13,10 +15,11 @@ export default express.Router()
       try {
          await validateUser(user);
          console.log('usuario autenticado correctamente.');
-         const token = `unToken__${uuid()}`;
-         await createToken(user, token);
-         await validateToken(token);
+         const token = createJWT();
          console.log('token:', token);
+         await saveToken(user, token);
+         validateJWT(token);
+         // await validateToken(token);
          res.status(200).send({ token });
       } catch (error: any) {
          if (error.message.includes(ERROR_TYPE.TYPE_NOT_FOUND)) {
