@@ -1,6 +1,5 @@
 import express from "express";
 import { getPrimeNumbers } from "./lib/DBmySqlPrimeNumbers";
-import authenticacionRouter from './app/middlewares/autenticacion';
 import clientRouter from "./app/routes/client";
 import loginRouter from './app/routes/login';
 
@@ -9,8 +8,8 @@ export default () => {
    const app = express();
 
    app.use(express.json());
-   
-   app.use('/login',authenticacionRouter);
+
+
    app.use('/login', loginRouter);
    app.use('/client', clientRouter);
 
