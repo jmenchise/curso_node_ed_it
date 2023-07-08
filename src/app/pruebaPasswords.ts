@@ -11,8 +11,8 @@ import { saveUser } from '../lib/DBmySql';
 
 
 const testUser = {
-   userName: 'pepe',
-   clearPassword: 'pepe1234'
+   userName: 'choquita',
+   clearPassword: 'choquita1234'
 };
 
 export default () => saveUser(testUser);

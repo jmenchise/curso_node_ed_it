@@ -12,7 +12,7 @@ export const ERROR_TYPE_MYSQL = {
 
 
 export const saveUser = async (user: User) => {
-   let tmplSQL = 'INSERT INTO users (id_user, user_name, encrypted_password, salt, token) VALUES (?, ?, ?, ?, ?)';
+   let tmplSQL = 'INSERT INTO users (user_id, user_name, encrypted_password, salt, token) VALUES (?, ?, ?, ?, ?)';
    let connection: any;
 
    try {
@@ -59,11 +59,12 @@ export const validateUser = async (user: User) => {
    if (tmpToCompare !== userFound.encrypted_password) {
       throw new Error(ERROR_TYPE_MYSQL.TYPE_NOT_VALIDATED);
    };
-   console.log('usuario autenticado correctamente.');
+
+   return userFound.user_id;
 };
 
-export const saveToken = async (user: User, token: string) => {
-   let tmplSQL = `UPDATE users SET token = ? WHERE user_name = ? `;
+export const saveToken = async (userId: string, token: string) => {
+   let tmplSQL = `UPDATE users SET token = ? WHERE user_id = ? `;
    let connection: any;
 
    try {
@@ -74,7 +75,7 @@ export const saveToken = async (user: User, token: string) => {
    };
 
    try {
-      await connection.query(tmplSQL, [token, user.userName]);
+      await connection.query(tmplSQL, [token, userId]);
       console.log('Token guardado con éxito!');
       await connection.end();
    } catch (error: any) {
@@ -99,7 +100,6 @@ export const validateToken = async (token: string) => {
    if (result.length === 0) {
       throw new Error(ERROR_TYPE_MYSQL.TYPE_NOT_FOUND);
    };
-   return result[0];
 };
 
 

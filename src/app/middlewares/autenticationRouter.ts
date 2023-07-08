@@ -6,11 +6,6 @@ import { ERROR_TYPE_MYSQL } from '../../lib/DBmySql';
 
 export default async (req, res, next) => {
    console.log('Se chequea si viene un token para autorizar o no al usuario');
-   if (req.method === 'POST') {
-      next();
-      return;
-   };
-
    try {
       const xToken = req.headers['x-token'];
       await validateJWT(xToken);

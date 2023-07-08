@@ -1,10 +1,10 @@
 import { SECRET, time } from "./commons";
 import jwt from 'jsonwebtoken';
 
-export function createJWT() {
+export function createJWT(userId: string, userName: string) {
    const payload = {
-      sub: '35205354',
-      name: 'Joan',
+      sub: userId,
+      name: userName,
       iat: time(),
       exp: time() + 40
    }

@@ -40,13 +40,13 @@ switch (process.argv[2]) {
    case 'mongo-test':
       pruebaMongo();
       break;
-   
+
    case 'passwords':
       pruebaPasswords();
       break;
 
    case 'create-jwt':
-      createJWT();
+      createJWT('35205354', 'Joan');
       break;
 
    case 'validate-jwt':
