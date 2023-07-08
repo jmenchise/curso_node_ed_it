@@ -10,6 +10,7 @@ import pruebaPasswords from "./app/pruebaPasswords";
 import { createJWT } from "./lib/jwt/createJWT";
 import { validateJWT } from "./lib/jwt/validateJWT";
 import { decodeJWT } from "./lib/jwt/decodeJWT";
+import testServer from "./app/testServer";
 
 
 switch (process.argv[2]) {
@@ -56,6 +57,11 @@ switch (process.argv[2]) {
    case 'read-jwt':
       decodeJWT(process.argv[3]);
       break;
+
+   case 'test-server':
+      testServer(process.argv[3]);
+      break;
+
 
    default:
       console.log('Por favor debe cargar un parámetro.');
