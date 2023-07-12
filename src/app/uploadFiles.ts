@@ -53,9 +53,10 @@ export default async () => {
       let pathFile = `${checkStr(process.env.PATH_OUTPUT_FILES)}/${file}`
       console.log('pathFile:', pathFile);
       let fileContent = await fs.readFile(pathFile, 'utf-8')
-      let fileContentParse = JSON.parse(fileContent);
-      console.log('fileContentParse:', fileContentParse);
-      await saveStudent(fileContentParse);
+      console.log('fileContent:', fileContent);
+      let fileContentParsed = JSON.parse(fileContent);
+      console.log('fileContentParse:', fileContentParsed);
+      await saveStudent(fileContentParsed);
       await fs.unlink(pathFile)
    }
 }

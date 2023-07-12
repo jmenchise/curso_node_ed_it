@@ -13,8 +13,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const uuid_1 = require("uuid");
 const DBmySql_1 = require("../../lib/DBmySql");
+const createJWT_1 = require("../../lib/jwt/createJWT");
 exports.default = express_1.default.Router()
     .get('/', (req, res) => {
 })
@@ -22,27 +22,21 @@ exports.default = express_1.default.Router()
     const user = req.body;
     console.log('user:', user);
     try {
-        yield (0, DBmySql_1.validateUser)(user);
-        console.log('usuario autenticado correctamente.');
-        const token = `unToken__${(0, uuid_1.v4)()}`;
-        yield (0, DBmySql_1.createToken)(user, token);
-        yield (0, DBmySql_1.validateToken)(token);
-        console.log('token:', token);
+        const userFoundId = yield (0, DBmySql_1.validateUser)(user);
+        const token = (0, createJWT_1.createJWT)(userFoundId, user.userName);
+        yield (0, DBmySql_1.saveToken)(userFoundId, token);
         res.status(200).send({ token });
     }
     catch (error) {
-        if (error.message.includes(DBmySql_1.ERROR_TYPE.TYPE_NOT_FOUND)) {
-            console.log('error message:', error.message);
+        if (error.message.includes(DBmySql_1.ERROR_TYPE_MYSQL.TYPE_NOT_FOUND)) {
             res.status(404).send({ error: error.message });
         }
         ;
-        if (error.message.includes(DBmySql_1.ERROR_TYPE.TYPE_NOT_VALIDATED)) {
-            console.log('error message:', error.message);
+        if (error.message.includes(DBmySql_1.ERROR_TYPE_MYSQL.TYPE_NOT_VALIDATED)) {
             res.status(401).send({ error: error.message });
         }
         ;
-        if (error.message.includes(DBmySql_1.ERROR_TYPE.TYPE_CONNECT_ERR)) {
-            console.log('error message:', error.message);
+        if (error.message.includes(DBmySql_1.ERROR_TYPE_MYSQL.TYPE_CONNECT_ERR)) {
             res.status(403).send({ error: error.message });
         }
         ;

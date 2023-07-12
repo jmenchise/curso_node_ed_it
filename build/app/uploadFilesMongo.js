@@ -12,23 +12,15 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.uploadFilesMongo = exports.pruebaMongo = void 0;
 const promises_1 = __importDefault(require("fs/promises"));
 const DBMongoDB_1 = require("../lib/DBMongoDB");
-const genUsuario_1 = __importDefault(require("../lib/genUsuario"));
-let client = (0, genUsuario_1.default)();
-const pruebaMongo = () => {
-    (0, DBMongoDB_1.insertOneMongo)('clients', client)
-        .then(r => console.log(r));
-};
-exports.pruebaMongo = pruebaMongo;
 let checkStr = (str) => {
     if (str === undefined) {
         throw new Error('El parámetro "PATH_OUTPUT_FILES" no puede ser undefined.');
     }
     return str;
 };
-const uploadFilesMongo = () => __awaiter(void 0, void 0, void 0, function* () {
+exports.default = () => __awaiter(void 0, void 0, void 0, function* () {
     /* Debemos definir una función "checkStr" porque "readdir" no puede recibir como parámetro
     algo de tipo undefined, y "proces.env.ETC" puede contener valores de tipo T o undefined.
     
@@ -42,18 +34,12 @@ const uploadFilesMongo = () => __awaiter(void 0, void 0, void 0, function* () {
     let files = yield promises_1.default.readdir(checkStr(process.env.PATH_OUTPUT_FILES));
     console.log('files:', files);
     for (let file of files) {
-        try {
-            let pathFile = `${checkStr(process.env.PATH_OUTPUT_FILES)}/${file}`;
-            console.log('pathFile:', pathFile);
-            let fileContent = yield promises_1.default.readFile(pathFile, 'utf-8');
-            let fileContentParsed = JSON.parse(fileContent);
-            console.log('fileContentParsed:', fileContentParsed);
-            (0, DBMongoDB_1.insertOneMongo)('clients', fileContentParsed);
-            yield promises_1.default.unlink(pathFile);
-        }
-        catch (error) {
-            console.log(error);
-        }
+        let pathFile = `${checkStr(process.env.PATH_OUTPUT_FILES)}/${file}`;
+        console.log('pathFile:', pathFile);
+        let fileContent = yield promises_1.default.readFile(pathFile, 'utf-8');
+        let fileContentParsed = JSON.parse(fileContent);
+        console.log('fileContentParse:', fileContentParsed);
+        (0, DBMongoDB_1.insertOneMongo)('clients', fileContentParsed);
+        yield promises_1.default.unlink(pathFile);
     }
 });
-exports.uploadFilesMongo = uploadFilesMongo;

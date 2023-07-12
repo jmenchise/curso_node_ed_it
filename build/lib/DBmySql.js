@@ -12,24 +12,24 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteClient = exports.validateToken = exports.createToken = exports.validateUser = exports.saveUser = exports.ERROR_TYPE = void 0;
+exports.deleteClient = exports.validateToken = exports.saveToken = exports.validateUser = exports.saveUser = exports.ERROR_TYPE_MYSQL = void 0;
 const uuid_1 = require("uuid");
 const sha256_1 = __importDefault(require("sha256"));
 const DBmySqlConnection_1 = __importDefault(require("./DBmySqlConnection"));
-exports.ERROR_TYPE = {
+exports.ERROR_TYPE_MYSQL = {
     TYPE_NOT_FOUND: 'error al encontrar el usuario',
     TYPE_NOT_VALIDATED: 'Usuario y/o contraseña incorrectos.',
     TYPE_CONNECT_ERR: 'error al conectar con la base de datos.'
 };
 const saveUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
-    let tmplSQL = 'INSERT INTO users (id_user, user_name, encrypted_password, salt, token) VALUES (?, ?, ?, ?, ?)';
+    let tmplSQL = 'INSERT INTO users (user_id, user_name, encrypted_password, salt, token) VALUES (?, ?, ?, ?, ?)';
     let connection;
     try {
         connection = yield (0, DBmySqlConnection_1.default)();
         console.log('Conexión con MySql exitosa!');
     }
     catch (error) {
-        throw new Error(exports.ERROR_TYPE.TYPE_CONNECT_ERR);
+        throw new Error(exports.ERROR_TYPE_MYSQL.TYPE_CONNECT_ERR);
     }
     ;
     user.salt = [(0, uuid_1.v4)(), (0, uuid_1.v4)()].join('__');
@@ -56,7 +56,7 @@ const validateUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
         console.log('Conexión con MySql exitosa!');
     }
     catch (error) {
-        throw new Error(exports.ERROR_TYPE.TYPE_CONNECT_ERR);
+        throw new Error(exports.ERROR_TYPE_MYSQL.TYPE_CONNECT_ERR);
     }
     ;
     const responseArr = yield connection.query(tmplSQL, user.userName);
@@ -64,39 +64,40 @@ const validateUser = (user) => __awaiter(void 0, void 0, void 0, function* () {
     console.log('result:', result);
     yield connection.end();
     if (result.length === 0) {
-        throw new Error(exports.ERROR_TYPE.TYPE_NOT_FOUND);
+        throw new Error(exports.ERROR_TYPE_MYSQL.TYPE_NOT_FOUND);
     }
     ;
     const userFound = result[0];
     const tmpToCompare = (0, sha256_1.default)([user.clearPassword, userFound.salt].join(''));
     if (tmpToCompare !== userFound.encrypted_password) {
-        throw new Error(exports.ERROR_TYPE.TYPE_NOT_VALIDATED);
+        throw new Error(exports.ERROR_TYPE_MYSQL.TYPE_NOT_VALIDATED);
     }
     ;
+    return userFound.user_id;
 });
 exports.validateUser = validateUser;
-const createToken = (user, token) => __awaiter(void 0, void 0, void 0, function* () {
-    let tmplSQL = `UPDATE users SET token = ? WHERE user_name = ? `;
+const saveToken = (userId, token) => __awaiter(void 0, void 0, void 0, function* () {
+    let tmplSQL = `UPDATE users SET token = ? WHERE user_id = ? `;
     let connection;
     try {
         connection = yield (0, DBmySqlConnection_1.default)();
         console.log('Conexión con MySql exitosa!');
     }
     catch (error) {
-        throw new Error(exports.ERROR_TYPE.TYPE_CONNECT_ERR);
+        throw new Error(exports.ERROR_TYPE_MYSQL.TYPE_CONNECT_ERR);
     }
     ;
     try {
-        yield connection.query(tmplSQL, [token, user.userName]);
-        console.log('Token creado con éxito!');
+        yield connection.query(tmplSQL, [token, userId]);
+        console.log('Token guardado con éxito!');
         yield connection.end();
     }
     catch (error) {
-        throw new Error(`error al crear el token.`);
+        throw new Error(`error al guardar el token.`);
     }
     ;
 });
-exports.createToken = createToken;
+exports.saveToken = saveToken;
 const validateToken = (token) => __awaiter(void 0, void 0, void 0, function* () {
     let tmplSQL = `SELECT * FROM users WHERE token = ? `;
     let connection;
@@ -105,7 +106,7 @@ const validateToken = (token) => __awaiter(void 0, void 0, void 0, function* () 
         console.log('Conexión con MySql exitosa!');
     }
     catch (error) {
-        throw new Error(exports.ERROR_TYPE.TYPE_CONNECT_ERR);
+        throw new Error(exports.ERROR_TYPE_MYSQL.TYPE_CONNECT_ERR);
     }
     ;
     const responseArr = yield connection.query(tmplSQL, token);
@@ -113,12 +114,9 @@ const validateToken = (token) => __awaiter(void 0, void 0, void 0, function* () 
     console.log('result:', result);
     yield connection.end();
     if (result.length === 0) {
-        throw new Error(exports.ERROR_TYPE.TYPE_NOT_FOUND);
+        throw new Error(exports.ERROR_TYPE_MYSQL.TYPE_NOT_FOUND);
     }
     ;
-    const tokenFound = result[0];
-    console.log('usuario encontrado!');
-    return tokenFound;
 });
 exports.validateToken = validateToken;
 const deleteClient = (id) => __awaiter(void 0, void 0, void 0, function* () {
@@ -129,7 +127,7 @@ const deleteClient = (id) => __awaiter(void 0, void 0, void 0, function* () {
         console.log('Conexión con MySql exitosa!');
     }
     catch (error) {
-        throw new Error(exports.ERROR_TYPE.TYPE_CONNECT_ERR);
+        throw new Error(exports.ERROR_TYPE_MYSQL.TYPE_CONNECT_ERR);
     }
     ;
     yield connection.query(tmplSQL);

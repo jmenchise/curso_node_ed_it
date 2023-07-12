@@ -5,7 +5,7 @@ import { getPrimeNumbers } from "./lib/DBmySqlPrimeNumbers";
 import 'dotenv/config';
 import createUserFile from "./app/createFiles";
 import uploadFiles from "./app/uploadFiles";
-import { pruebaMongo } from "./app/pruebaMongo";
+import { pruebaMongo, uploadFilesMongo } from "./app/pruebaMongo";
 import pruebaPasswords from "./app/pruebaPasswords";
 import { createJWT } from "./lib/jwt/createJWT";
 import { validateJWT } from "./lib/jwt/validateJWT";
@@ -36,6 +36,10 @@ switch (process.argv[2]) {
 
    case 'upload-files':
       uploadFiles();
+      break;
+
+   case 'upload-files-mongo':
+      uploadFilesMongo();
       break;
 
    case 'mongo-test':

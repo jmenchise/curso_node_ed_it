@@ -57,9 +57,10 @@ exports.default = () => __awaiter(void 0, void 0, void 0, function* () {
         let pathFile = `${checkStr(process.env.PATH_OUTPUT_FILES)}/${file}`;
         console.log('pathFile:', pathFile);
         let fileContent = yield promises_1.default.readFile(pathFile, 'utf-8');
-        let fileContentParse = JSON.parse(fileContent);
-        console.log('fileContentParse:', fileContentParse);
-        yield saveStudent(fileContentParse);
+        console.log('fileContent:', fileContent);
+        let fileContentParsed = JSON.parse(fileContent);
+        console.log('fileContentParse:', fileContentParsed);
+        yield saveStudent(fileContentParsed);
         yield promises_1.default.unlink(pathFile);
     }
 });

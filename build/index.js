@@ -12,7 +12,10 @@ const createFiles_1 = __importDefault(require("./app/createFiles"));
 const uploadFiles_1 = __importDefault(require("./app/uploadFiles"));
 const pruebaMongo_1 = require("./app/pruebaMongo");
 const pruebaPasswords_1 = __importDefault(require("./app/pruebaPasswords"));
-const createToken_1 = require("./lib/jwt/createToken");
+const createJWT_1 = require("./lib/jwt/createJWT");
+const validateJWT_1 = require("./lib/jwt/validateJWT");
+const decodeJWT_1 = require("./lib/jwt/decodeJWT");
+const testServer_1 = __importDefault(require("./app/testServer"));
 switch (process.argv[2]) {
     case 'numeros-primos':
         (0, numerosPrimos_1.recursiveFindPrimeNumbers)();
@@ -32,6 +35,9 @@ switch (process.argv[2]) {
     case 'upload-files':
         (0, uploadFiles_1.default)();
         break;
+    case 'upload-files-mongo':
+        (0, pruebaMongo_1.uploadFilesMongo)();
+        break;
     case 'mongo-test':
         (0, pruebaMongo_1.pruebaMongo)();
         break;
@@ -39,9 +45,16 @@ switch (process.argv[2]) {
         (0, pruebaPasswords_1.default)();
         break;
     case 'create-jwt':
-        (0, createToken_1.createJWT)();
+        (0, createJWT_1.createJWT)('35205354', 'Joan');
         break;
     case 'validate-jwt':
+        (0, validateJWT_1.validateJWT)(process.argv[3]);
+        break;
+    case 'read-jwt':
+        (0, decodeJWT_1.decodeJWT)(process.argv[3]);
+        break;
+    case 'test-server':
+        (0, testServer_1.default)(process.argv[3]);
         break;
     default:
         console.log('Por favor debe cargar un parámetro.');

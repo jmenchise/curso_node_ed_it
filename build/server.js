@@ -7,11 +7,13 @@ const express_1 = __importDefault(require("express"));
 const DBmySqlPrimeNumbers_1 = require("./lib/DBmySqlPrimeNumbers");
 const client_1 = __importDefault(require("./app/routes/client"));
 const login_1 = __importDefault(require("./app/routes/login"));
+const autenticationRouter_1 = __importDefault(require("./app/middlewares/autenticationRouter"));
+const user_1 = __importDefault(require("./app/routes/user"));
 exports.default = () => {
     const app = (0, express_1.default)();
     app.use(express_1.default.json());
     app.use('/login', login_1.default);
-    // app.use(authenticacionRouter());
+    app.use('/user', autenticationRouter_1.default, user_1.default);
     app.use('/client', client_1.default);
     app.get('/primer-get', (req, res) => {
         let response = {

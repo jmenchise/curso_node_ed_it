@@ -10,7 +10,7 @@ const DBmySql_1 = require("../lib/DBmySql");
 //    console.log('encryptedPass:', encryptedPass);
 // }
 const testUser = {
-    userName: 'pepe',
-    clearPassword: 'pepe1234'
+    userName: 'choquita',
+    clearPassword: 'choquita1234'
 };
 exports.default = () => (0, DBmySql_1.saveUser)(testUser);
