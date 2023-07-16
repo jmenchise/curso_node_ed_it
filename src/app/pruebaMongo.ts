@@ -33,7 +33,6 @@ export const uploadFilesMongo = async () => {
 
 
    let files = await fs.readdir(checkStr(process.env.PATH_OUTPUT_FILES))
-   console.log('files:', files)
    for (let file of files) {
       try {
          let pathFile = `${checkStr(process.env.PATH_OUTPUT_FILES)}/${file}`
@@ -41,10 +40,11 @@ export const uploadFilesMongo = async () => {
          let fileContent = await fs.readFile(pathFile, 'utf-8')
          let fileContentParsed = JSON.parse(fileContent);
          console.log('fileContentParsed:', fileContentParsed);
-         insertOneMongo('clients', fileContentParsed);
+         await insertOneMongo('clients', fileContentParsed);
+         console.log('Archivo cargado correctamente.');
          await fs.unlink(pathFile)
       } catch (error) {
          console.log(error);
-      }
-   }
-}
+      };
+   };
+};

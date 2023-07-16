@@ -11,6 +11,7 @@ import { createJWT } from "./lib/jwt/createJWT";
 import { validateJWT } from "./lib/jwt/validateJWT";
 import { decodeJWT } from "./lib/jwt/decodeJWT";
 import testServer from "./app/testServer";
+import { execChildProcess } from "./app/childProcess";
 
 
 switch (process.argv[2]) {
@@ -64,6 +65,10 @@ switch (process.argv[2]) {
 
    case 'test-server':
       testServer(process.argv[3]);
+      break;
+   
+   case 'child-process':
+      execChildProcess();
       break;
 
 
