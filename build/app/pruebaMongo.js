@@ -40,7 +40,6 @@ const uploadFilesMongo = () => __awaiter(void 0, void 0, void 0, function* () {
     Todo esto pasa porque estamos en typescript. con javascript no tendríamos este problema
     */
     let files = yield promises_1.default.readdir(checkStr(process.env.PATH_OUTPUT_FILES));
-    console.log('files:', files);
     for (let file of files) {
         try {
             let pathFile = `${checkStr(process.env.PATH_OUTPUT_FILES)}/${file}`;
@@ -48,12 +47,15 @@ const uploadFilesMongo = () => __awaiter(void 0, void 0, void 0, function* () {
             let fileContent = yield promises_1.default.readFile(pathFile, 'utf-8');
             let fileContentParsed = JSON.parse(fileContent);
             console.log('fileContentParsed:', fileContentParsed);
-            (0, DBMongoDB_1.insertOneMongo)('clients', fileContentParsed);
+            yield (0, DBMongoDB_1.insertOneMongo)('clients', fileContentParsed);
+            console.log('Archivo cargado correctamente.');
             yield promises_1.default.unlink(pathFile);
         }
         catch (error) {
             console.log(error);
         }
+        ;
     }
+    ;
 });
 exports.uploadFilesMongo = uploadFilesMongo;

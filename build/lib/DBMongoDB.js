@@ -12,7 +12,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteOneMongo = exports.updateOneMongo = exports.findOneMongo = exports.queryMongo = exports.insertOneMongo = void 0;
 const mongodb_1 = require("mongodb");
 const insertOneMongo = (collectionName, document) => __awaiter(void 0, void 0, void 0, function* () {
-    const url = 'mongodb://0.0.0.0:27017';
+    const url = 'mongodb://137.184.17.241:27017';
     const client = yield mongodb_1.MongoClient.connect(url);
     console.log('Conexión con Mongodb exitosa!');
     const DB = client.db(process.env.DB_MONGODB_NAME);

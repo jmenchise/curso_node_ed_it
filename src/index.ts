@@ -12,7 +12,7 @@ import { validateJWT } from "./lib/jwt/validateJWT";
 import { decodeJWT } from "./lib/jwt/decodeJWT";
 import testServer from "./app/testServer";
 import { execChildProcess } from "./app/childProcess";
-
+import loggerTest from './app/loggerTest';
 
 switch (process.argv[2]) {
    case 'numeros-primos':
@@ -69,6 +69,10 @@ switch (process.argv[2]) {
    
    case 'child-process':
       execChildProcess();
+      break;
+
+   case 'logger-test':
+      loggerTest();
       break;
 
 

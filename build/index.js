@@ -16,6 +16,8 @@ const createJWT_1 = require("./lib/jwt/createJWT");
 const validateJWT_1 = require("./lib/jwt/validateJWT");
 const decodeJWT_1 = require("./lib/jwt/decodeJWT");
 const testServer_1 = __importDefault(require("./app/testServer"));
+const childProcess_1 = require("./app/childProcess");
+const loggerTest_1 = __importDefault(require("./app/loggerTest"));
 switch (process.argv[2]) {
     case 'numeros-primos':
         (0, numerosPrimos_1.recursiveFindPrimeNumbers)();
@@ -55,6 +57,12 @@ switch (process.argv[2]) {
         break;
     case 'test-server':
         (0, testServer_1.default)(process.argv[3]);
+        break;
+    case 'child-process':
+        (0, childProcess_1.execChildProcess)();
+        break;
+    case 'logger-test':
+        (0, loggerTest_1.default)();
         break;
     default:
         console.log('Por favor debe cargar un parámetro.');

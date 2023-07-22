@@ -4,8 +4,17 @@ import clientRouter from "./app/routes/client";
 import loginRouter from './app/routes/login';
 import autenticacionRouter from "./app/middlewares/autenticationRouter";
 import userRouter from "./app/routes/user";
+import createLogger from "./cfg/logger";
+
+const logger = createLogger('server.ts');
+
 
 export default () => {
+
+   logger.info('levantando Servidor Express');
+   //de esta forma, en este archivo server, dejamos de usar el console.log y en su lugar
+   //usamos los logger.info, .error, trace, etc...
+   //de esta forma no solo lo mostramos en pantalla sino que tmb se guarda en un archivo.
 
    const app = express();
 
@@ -54,6 +63,6 @@ export default () => {
       res.status(404).send('RECURSO NO ENCONTRADO');
    })
 
-   const server = app.listen(8080, () => console.log('Servidor express escuchando por el puerto 8080.'));
-   server.on('error', error => console.error(`Error al intentar conectar con el servidor. Detalle: ${error.message}`));
+   const server = app.listen(8080, () => logger.info('Servidor express escuchando por el puerto 8080.'));
+   server.on('error', error => logger.error(`Error al intentar conectar con el servidor. Detalle: ${error.message}`));
 }
