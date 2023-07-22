@@ -1,14 +1,19 @@
 import { MongoClient } from 'mongodb';
 
+let checkStr = (str: string | undefined): string => {
+   if (str === undefined) {
+      throw new Error('El parámetro "DB_MONGODB_URL" no puede ser undefined.');
+   };
+   return str;
+}
+
 
 export const insertOneMongo = async (collectionName: string, document: object) => {
-   const url = 'mongodb://137.184.17.241:27017';
 
-   const client = await MongoClient.connect(url);
+   const client = await MongoClient.connect(checkStr(process.env.DB_MONGODB_URL));
    console.log('Conexión con Mongodb exitosa!');
    const DB = client.db(process.env.DB_MONGODB_NAME);
    const collection = DB.collection(collectionName);
-
    //guardo lo que retorna el insertOne en una variable para 
    //visualizar el resultado en la consola (si se pudo insertar
    // el documento o no).
@@ -20,9 +25,8 @@ export const insertOneMongo = async (collectionName: string, document: object) =
 
 
 export const queryMongo = async (collectionName: string, query: object) => {
-   const url = 'mongodb://0.0.0.0:27017';
 
-   const client = await MongoClient.connect(url);
+   const client = await MongoClient.connect(checkStr(process.env.DB_MONGODB_URL));
    console.log('Conexión con Mongodb exitosa!');
    const DB = client.db(process.env.DB_MONGODB_NAME);
    const collection = DB.collection(collectionName);
@@ -34,9 +38,8 @@ export const queryMongo = async (collectionName: string, query: object) => {
 }
 
 export const findOneMongo = async (collectionName: string, id: string) => {
-   const url = 'mongodb://0.0.0.0:27017';
 
-   const client = await MongoClient.connect(url);
+   const client = await MongoClient.connect(checkStr(process.env.DB_MONGODB_URL));
    console.log('Conexión con Mongodb exitosa!');
    const DB = client.db(process.env.DB_MONGODB_NAME);
    const collection = DB.collection(collectionName);
@@ -48,9 +51,8 @@ export const findOneMongo = async (collectionName: string, id: string) => {
 }
 
 export const updateOneMongo = async (collectionName: string, id: string, obj: object) => {
-   const url = 'mongodb://0.0.0.0:27017';
 
-   const client = await MongoClient.connect(url);
+   const client = await MongoClient.connect(checkStr(process.env.DB_MONGODB_URL));
    console.log('Conexión con Mongodb exitosa!');
    const DB = client.db(process.env.DB_MONGODB_NAME);
    const collection = DB.collection(collectionName);
@@ -64,9 +66,8 @@ export const updateOneMongo = async (collectionName: string, id: string, obj: ob
 }
 
 export const deleteOneMongo = async (collectionName: string, id: string) => {
-   const url = 'mongodb://0.0.0.0:27017';
 
-   const client = await MongoClient.connect(url);
+   const client = await MongoClient.connect(checkStr(process.env.DB_MONGODB_URL));
    console.log('Conexión con Mongodb exitosa!');
    const DB = client.db(process.env.DB_MONGODB_NAME);
    const collection = DB.collection(collectionName);

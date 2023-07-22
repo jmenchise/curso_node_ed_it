@@ -1,12 +1,15 @@
 import fs from 'fs/promises';
 import { insertOneMongo } from '../lib/DBMongoDB';
 import genUsuario from '../lib/genUsuario';
+import createLogger from '../cfg/logger';
+
+const log = createLogger('prueba-mongo');
 
 let client = genUsuario();
 
 export const pruebaMongo = () => {
    insertOneMongo('clients', client)
-   .then(r => console.log(r));
+      .then(r => console.log(r));
 }
 
 
@@ -46,5 +49,14 @@ export const uploadFilesMongo = async () => {
       } catch (error) {
          console.log(error);
       };
+   };
+};
+
+export const saveRandomClients = async () => {
+   for (let i = 1; i <= 30; i++) {
+      const randomClient = genUsuario();
+      log.info('generando cliente aleatorio para insertar en mongo n°:' + ' '  + i);
+      await insertOneMongo('clients', randomClient);
+      log.info(`Cliente ${i} insertado exisosamente`);
    };
 };

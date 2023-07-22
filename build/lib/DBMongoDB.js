@@ -11,9 +11,15 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteOneMongo = exports.updateOneMongo = exports.findOneMongo = exports.queryMongo = exports.insertOneMongo = void 0;
 const mongodb_1 = require("mongodb");
+let checkStr = (str) => {
+    if (str === undefined) {
+        throw new Error('El parámetro "DB_MONGODB_URL" no puede ser undefined.');
+    }
+    ;
+    return str;
+};
 const insertOneMongo = (collectionName, document) => __awaiter(void 0, void 0, void 0, function* () {
-    const url = 'mongodb://137.184.17.241:27017';
-    const client = yield mongodb_1.MongoClient.connect(url);
+    const client = yield mongodb_1.MongoClient.connect(checkStr(process.env.DB_MONGODB_URL));
     console.log('Conexión con Mongodb exitosa!');
     const DB = client.db(process.env.DB_MONGODB_NAME);
     const collection = DB.collection(collectionName);
@@ -26,8 +32,7 @@ const insertOneMongo = (collectionName, document) => __awaiter(void 0, void 0, v
 });
 exports.insertOneMongo = insertOneMongo;
 const queryMongo = (collectionName, query) => __awaiter(void 0, void 0, void 0, function* () {
-    const url = 'mongodb://0.0.0.0:27017';
-    const client = yield mongodb_1.MongoClient.connect(url);
+    const client = yield mongodb_1.MongoClient.connect(checkStr(process.env.DB_MONGODB_URL));
     console.log('Conexión con Mongodb exitosa!');
     const DB = client.db(process.env.DB_MONGODB_NAME);
     const collection = DB.collection(collectionName);
@@ -37,8 +42,7 @@ const queryMongo = (collectionName, query) => __awaiter(void 0, void 0, void 0, 
 });
 exports.queryMongo = queryMongo;
 const findOneMongo = (collectionName, id) => __awaiter(void 0, void 0, void 0, function* () {
-    const url = 'mongodb://0.0.0.0:27017';
-    const client = yield mongodb_1.MongoClient.connect(url);
+    const client = yield mongodb_1.MongoClient.connect(checkStr(process.env.DB_MONGODB_URL));
     console.log('Conexión con Mongodb exitosa!');
     const DB = client.db(process.env.DB_MONGODB_NAME);
     const collection = DB.collection(collectionName);
@@ -48,8 +52,7 @@ const findOneMongo = (collectionName, id) => __awaiter(void 0, void 0, void 0, f
 });
 exports.findOneMongo = findOneMongo;
 const updateOneMongo = (collectionName, id, obj) => __awaiter(void 0, void 0, void 0, function* () {
-    const url = 'mongodb://0.0.0.0:27017';
-    const client = yield mongodb_1.MongoClient.connect(url);
+    const client = yield mongodb_1.MongoClient.connect(checkStr(process.env.DB_MONGODB_URL));
     console.log('Conexión con Mongodb exitosa!');
     const DB = client.db(process.env.DB_MONGODB_NAME);
     const collection = DB.collection(collectionName);
@@ -61,8 +64,7 @@ const updateOneMongo = (collectionName, id, obj) => __awaiter(void 0, void 0, vo
 });
 exports.updateOneMongo = updateOneMongo;
 const deleteOneMongo = (collectionName, id) => __awaiter(void 0, void 0, void 0, function* () {
-    const url = 'mongodb://0.0.0.0:27017';
-    const client = yield mongodb_1.MongoClient.connect(url);
+    const client = yield mongodb_1.MongoClient.connect(checkStr(process.env.DB_MONGODB_URL));
     console.log('Conexión con Mongodb exitosa!');
     const DB = client.db(process.env.DB_MONGODB_NAME);
     const collection = DB.collection(collectionName);

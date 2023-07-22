@@ -12,10 +12,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.uploadFilesMongo = exports.pruebaMongo = void 0;
+exports.saveRandomClients = exports.uploadFilesMongo = exports.pruebaMongo = void 0;
 const promises_1 = __importDefault(require("fs/promises"));
 const DBMongoDB_1 = require("../lib/DBMongoDB");
 const genUsuario_1 = __importDefault(require("../lib/genUsuario"));
+const logger_1 = __importDefault(require("../cfg/logger"));
+const log = (0, logger_1.default)('prueba-mongo');
 let client = (0, genUsuario_1.default)();
 const pruebaMongo = () => {
     (0, DBMongoDB_1.insertOneMongo)('clients', client)
@@ -59,3 +61,13 @@ const uploadFilesMongo = () => __awaiter(void 0, void 0, void 0, function* () {
     ;
 });
 exports.uploadFilesMongo = uploadFilesMongo;
+const saveRandomClients = () => __awaiter(void 0, void 0, void 0, function* () {
+    for (let i = 1; i <= 30; i++) {
+        const randomClient = (0, genUsuario_1.default)();
+        log.info('generando cliente aleatorio para insertar en mongo n°:' + ' ' + i);
+        yield (0, DBMongoDB_1.insertOneMongo)('clients', randomClient);
+        log.info(`Cliente ${i} insertado exisosamente`);
+    }
+    ;
+});
+exports.saveRandomClients = saveRandomClients;

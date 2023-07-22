@@ -64,6 +64,9 @@ switch (process.argv[2]) {
     case 'logger-test':
         (0, loggerTest_1.default)();
         break;
+    case 'save-clients-mongo':
+        (0, pruebaMongo_1.saveRandomClients)();
+        break;
     default:
         console.log('Por favor debe cargar un parámetro.');
         break;

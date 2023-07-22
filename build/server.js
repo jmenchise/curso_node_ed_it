@@ -9,7 +9,13 @@ const client_1 = __importDefault(require("./app/routes/client"));
 const login_1 = __importDefault(require("./app/routes/login"));
 const autenticationRouter_1 = __importDefault(require("./app/middlewares/autenticationRouter"));
 const user_1 = __importDefault(require("./app/routes/user"));
+const logger_1 = __importDefault(require("./cfg/logger"));
+const logger = (0, logger_1.default)('server.ts');
 exports.default = () => {
+    logger.info('levantando Servidor Express');
+    //de esta forma, en este archivo server, dejamos de usar el console.log y en su lugar
+    //usamos los logger.info, .error, trace, etc...
+    //de esta forma no solo lo mostramos en pantalla sino que tmb se guarda en un archivo.
     const app = (0, express_1.default)();
     app.use(express_1.default.json());
     app.use('/login', login_1.default);
@@ -43,6 +49,6 @@ exports.default = () => {
     app.get('/*', (req, res) => {
         res.status(404).send('RECURSO NO ENCONTRADO');
     });
-    const server = app.listen(8080, () => console.log('Servidor express escuchando por el puerto 8080.'));
-    server.on('error', error => console.error(`Error al intentar conectar con el servidor. Detalle: ${error.message}`));
+    const server = app.listen(8080, () => logger.info('Servidor express escuchando por el puerto 8080.'));
+    server.on('error', error => logger.error(`Error al intentar conectar con el servidor. Detalle: ${error.message}`));
 };

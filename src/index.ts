@@ -5,7 +5,7 @@ import { getPrimeNumbers } from "./lib/DBmySqlPrimeNumbers";
 import 'dotenv/config';
 import createUserFile from "./app/createFiles";
 import uploadFiles from "./app/uploadFiles";
-import { pruebaMongo, uploadFilesMongo } from "./app/pruebaMongo";
+import { pruebaMongo, uploadFilesMongo, saveRandomClients } from "./app/pruebaMongo";
 import pruebaPasswords from "./app/pruebaPasswords";
 import { createJWT } from "./lib/jwt/createJWT";
 import { validateJWT } from "./lib/jwt/validateJWT";
@@ -73,6 +73,10 @@ switch (process.argv[2]) {
 
    case 'logger-test':
       loggerTest();
+      break;
+
+   case 'save-clients-mongo':
+      saveRandomClients();
       break;
 
 
