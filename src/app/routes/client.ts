@@ -41,7 +41,7 @@ export default express.Router()
          .catch(error => {
             console.log(error.message);
             res.status(500).send(error.message);
-         })
+         });
    })
    .put('/:id', (req, res) => {
       const { id } = req.params;
@@ -53,7 +53,7 @@ export default express.Router()
          .catch(error => {
             console.log(error.message);
             res.status(500).send(error.message);
-         })
+         });
    })
    .delete('/:id', (req, res) => {
       const { id } = req.params;
@@ -63,6 +63,6 @@ export default express.Router()
          .catch(error => {
             console.log(error.message);
             res.status(500).send(error.message);
-         })
-   })
+         });
+   });
 

@@ -24,7 +24,7 @@ export default () => {
    app.use('/login', loginRouter);
    app.use('/user', autenticacionRouter, userRouter);
 
-   app.use('/client', clientRouter);
+   app.use('/api/client', clientRouter);
 
    app.get('/primer-get', (req, res) => {
       let response = {
