@@ -13,6 +13,8 @@ import { decodeJWT } from "./lib/jwt/decodeJWT";
 import testServer from "./app/testServer";
 import { execChildProcess } from "./app/childProcess";
 import loggerTest from './app/loggerTest';
+import { numbersProducer } from "./kafka/producer";
+import { initConsumer } from "./kafka/consumer";
 
 switch (process.argv[2]) {
    case 'numeros-primos':
@@ -32,7 +34,7 @@ switch (process.argv[2]) {
       break;
 
    case 'client':
-      httpClient(r => console.log(r));
+      httpClient();
       break;
 
    case 'upload-files':
@@ -79,6 +81,13 @@ switch (process.argv[2]) {
       saveRandomClients();
       break;
 
+   case 'kafka-numbers-producer':
+      numbersProducer();
+      break;
+      
+   case 'kafka-consumer':
+      initConsumer();
+      break;
 
    default:
       console.log('Por favor debe cargar un parámetro.');

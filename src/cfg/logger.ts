@@ -23,4 +23,4 @@ const loggerConfig = {
 
 log4js.configure(loggerConfig);
 
-export default loggerName => log4js.getLogger(loggerName); 
+export default (loggerName: string) => log4js.getLogger(loggerName); 

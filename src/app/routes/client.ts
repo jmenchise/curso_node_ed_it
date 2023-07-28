@@ -1,6 +1,7 @@
 import express from 'express';
 import { insertOneMongo, queryMongo, findOneMongo, updateOneMongo, deleteOneMongo } from '../../lib/DBMongoDB';
 import genUsuario from '../../lib/genUsuario';
+import { kafkaProducer } from '../../kafka/producer';
 
 export default express.Router()
    .get('/', (req, res) => {
@@ -35,8 +36,9 @@ export default express.Router()
    })
    .post('/', (req, res) => {
       const client = req.body;
-      console.log('client:', client);
-      insertOneMongo('clients', client)
+      console.log('client:', client)
+      // insertOneMongo('clients', client)
+      kafkaProducer(client)
          .then(r => res.status(201).send(r))
          .catch(error => {
             console.log(error.message);

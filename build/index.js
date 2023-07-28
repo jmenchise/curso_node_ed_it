@@ -18,6 +18,8 @@ const decodeJWT_1 = require("./lib/jwt/decodeJWT");
 const testServer_1 = __importDefault(require("./app/testServer"));
 const childProcess_1 = require("./app/childProcess");
 const loggerTest_1 = __importDefault(require("./app/loggerTest"));
+const producer_1 = require("./kafka/producer");
+const consumer_1 = require("./kafka/consumer");
 switch (process.argv[2]) {
     case 'numeros-primos':
         (0, numerosPrimos_1.recursiveFindPrimeNumbers)();
@@ -32,7 +34,7 @@ switch (process.argv[2]) {
         (0, DBmySqlPrimeNumbers_1.getPrimeNumbers)(r => console.log(r));
         break;
     case 'client':
-        (0, httpClient_1.default)(r => console.log(r));
+        (0, httpClient_1.default)();
         break;
     case 'upload-files':
         (0, uploadFiles_1.default)();
@@ -66,6 +68,12 @@ switch (process.argv[2]) {
         break;
     case 'save-clients-mongo':
         (0, pruebaMongo_1.saveRandomClients)();
+        break;
+    case 'kafka-numbers-producer':
+        (0, producer_1.numbersProducer)();
+        break;
+    case 'kafka-consumer':
+        (0, consumer_1.initConsumer)();
         break;
     default:
         console.log('Por favor debe cargar un parámetro.');

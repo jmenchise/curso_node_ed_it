@@ -20,7 +20,7 @@ exports.default = () => {
     app.use(express_1.default.json());
     app.use('/login', login_1.default);
     app.use('/user', autenticationRouter_1.default, user_1.default);
-    app.use('/client', client_1.default);
+    app.use('/api/client', client_1.default);
     app.get('/primer-get', (req, res) => {
         let response = {
             nombre: 'hola',

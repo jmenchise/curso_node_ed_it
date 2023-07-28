@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const DBMongoDB_1 = require("../../lib/DBMongoDB");
 const genUsuario_1 = __importDefault(require("../../lib/genUsuario"));
+const producer_1 = require("../../kafka/producer");
 exports.default = express_1.default.Router()
     .get('/', (req, res) => {
     (0, DBMongoDB_1.queryMongo)('clients', {})
@@ -36,7 +37,8 @@ exports.default = express_1.default.Router()
     .post('/', (req, res) => {
     const client = req.body;
     console.log('client:', client);
-    (0, DBMongoDB_1.insertOneMongo)('clients', client)
+    // insertOneMongo('clients', client)
+    (0, producer_1.kafkaProducer)(client)
         .then(r => res.status(201).send(r))
         .catch(error => {
         console.log(error.message);

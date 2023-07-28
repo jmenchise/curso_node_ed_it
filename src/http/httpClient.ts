@@ -1,36 +1,30 @@
-import fs from 'fs/promises';
-const https = require('follow-redirects').http;
-const qs = require('querystring');
+import createLogger from "../cfg/logger";
+import genUsuario from '../lib/genUsuario';
 
 
-export default onFinish => {
-   let options = {
-      'method': 'GET',
-      'hostname': 'localhost',
-      'port': 8080,
-      'path': '/primer-get',
-      headers: {
-         'Content-Type': 'application/json',
-      },
-      maxRedirects: 20
-   };
+const logger = createLogger('http-client.ts');
+const urlConnect = 'http://localhost:8080/api/client';
 
-   let req = https.request(options, function (res) {
-      let chunks: any[] = [];
-      res.on('data', function (chunk) {
-         chunks.push(chunk);
+
+const httpPost = async (url: string, obj: object) => {
+   try {
+      await fetch(url, {
+         method: 'post',
+         headers: {
+            'content-type': 'application/json'
+         },
+         body: JSON.stringify(obj)
       });
-
-      res.on('end', function (chunk) {
-         let body = Buffer.concat(chunks)
-         onFinish(body.toString())
-      });
-
-      res.on('error', function (error) {
-         console.error(error)
-      });
-   });
-
-
-   req.end();
+   } catch (error: any) {
+      logger.error(`Error al intentar conectar con el servidor. Detalle: ${error.message}`)
+   }
 }
+
+export default async () => {
+   for (let i = 1; i < 100; i++) {
+      logger.info(`creando cliente N°: ${i}`);
+      const newClient = genUsuario();
+      await httpPost(urlConnect, newClient);
+      logger.info(`cliente N°: ${i} creado correctamente.`);
+   };
+};
